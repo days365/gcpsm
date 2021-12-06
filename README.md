@@ -4,7 +4,7 @@ GCPSM parses Secret Manager value (only json format).
 
 ## How to Use
 
-```
+```go
 type Sec struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
