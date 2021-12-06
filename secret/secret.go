@@ -12,7 +12,7 @@ import (
 
 const secretAddrFmt = "projects/%s/secrets/%s/versions/%s"
 
-type SecretConfig struct {
+type Config struct {
 	Version   string
 	ProjectID string
 	Name      string
@@ -24,7 +24,7 @@ type SecretConfig struct {
 //
 // You can set from json file if you set 'IsFile' as true.
 // In that case, you must set 'File'.
-func NewSecret(conf SecretConfig, v interface{}) error {
+func NewSecret(conf Config, v interface{}) error {
 	if conf.IsFile {
 		return fromFile(conf, v)
 
@@ -32,7 +32,7 @@ func NewSecret(conf SecretConfig, v interface{}) error {
 	return fromSecretManager(conf, v)
 }
 
-func fromSecretManager(conf SecretConfig, v interface{}) error {
+func fromSecretManager(conf Config, v interface{}) error {
 	ctx := context.Background()
 	client, err := secretmanager.NewClient(ctx)
 	if err != nil {
@@ -53,7 +53,7 @@ func fromSecretManager(conf SecretConfig, v interface{}) error {
 
 }
 
-func fromFile(conf SecretConfig, v interface{}) error {
+func fromFile(conf Config, v interface{}) error {
 	f, err := os.Open(conf.File)
 	if err != nil {
 		return err
